@@ -1,0 +1,62 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int n, m;
+vector < int> map[501];
+int main(void) {
+
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+
+	cin >> n >> m;
+
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		map[a].push_back(b);
+		map[b].push_back(a);
+	}
+
+	vector<int> v;
+	vector<int> v2;
+	int sum = 0;
+	for (int i = 0; i < map[1].size(); i++) {
+		v.push_back(map[1][i]);
+	}
+	
+	for (int i = 0; i < v.size(); i++) {
+		
+		for (int j = 0; j < map[v[i]].size(); j++) {
+		
+			sort(v.begin(), v.end());
+
+			if (!binary_search(v.begin(), v.end(), map[v[i]][j])) {
+				
+				v2.push_back(map[v[i]][j]);
+				
+			}
+			
+		}
+	}
+
+
+	for (int i = 0; i < v2.size(); i++) {
+		sort(v.begin(), v.end());
+		if (!binary_search(v.begin(), v.end(), v2[i])) {
+			v.push_back(v2[i]);
+		}
+	}
+
+	cout << v.size() - 1<< endl;
+	
+	return 0;
+}
+
+//친구의 관계를 벡터로 연결 해주었다. 1번이 상근이이고 상근이의 친구의 친구 까지만 초대하기 때문에
+//먼저 상근이와 친구인 번호를 v에 저장하고 친구들의 관계를 v2에 저장하였다
+//v2에 값을 v에 저장할때 binary_search를 사용하여 중복을 제거해서 저장하면 v는 상근이가 초대해야할 친구들이 담긴다
+//v에는 상근이도 저장되기 때문에 size-1을 해주어 출력한다.

@@ -1,0 +1,66 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+vector<int> v;
+
+
+
+void samgak() {
+
+	int N = 1;
+
+
+
+	while ((N) * (N + 1) / 2 < 1000)
+
+	{
+
+		v.push_back(N * (N + 1) / 2);
+
+		N++;
+
+	}
+}
+
+
+bool check(int num) {
+
+	for (int i = 0; i < v.size(); i++) {
+		for (int j = 0; j < v.size(); j++) {
+			for (int k = 0; k < v.size(); k++) {
+				if (v[i] + v[j] + v[k] == num) {
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+int main(void) {
+
+
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+	
+	int k;
+	cin >> k;
+
+	samgak();
+	
+	for (int i = 1; i <= k; i++) {
+		int x;
+		cin >> x;
+		cout << check(x) << endl;
+	}
+
+	
+	return 0;
+
+}
+
+
+//3중 for문을 사용하여 중복을 포함한 3번까지의 합을 구현한 것이 놀라웠다.

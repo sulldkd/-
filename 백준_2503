@@ -1,0 +1,97 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+int t;
+pair<int, int > p1[101];
+
+
+vector<string> v1;
+
+int S, B;
+int cnt;
+int answer;
+int main(void) {
+
+
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+	cin >> t;
+	for (int i = 0; i < t; i++) {
+		int s, b;
+		string n;
+
+		cin >> n >> s >> b;
+		v1.push_back(n);
+		p1[i].first = s;
+		p1[i].second = b;
+
+
+
+	}
+
+	for (int i = 123; i <= 999; i++) {
+
+		string tmp = to_string(i);
+		if (tmp[0] != tmp[1] && tmp[1] != tmp[2] && tmp[0] != tmp[2] && tmp[1]!='0' && tmp[2]!='0') {
+
+			
+			pair<int, int > p2[101];
+
+			for (int j = 0; j < t; j++) {
+
+				for (int k = 0; k < 3; k++) {
+
+
+					for (int l = 0; l < 3; l++) {
+
+						if (k == l && tmp[l] == v1[j][k]) {
+							S++;
+
+
+						}
+						else if (k != l && tmp[l] == v1[j][k]) {
+							B++;
+
+						}
+					}
+
+				}
+
+				p2[j].first = S;
+				p2[j].second = B;
+				S = 0;
+				B = 0;
+
+			}
+
+
+			for (int j = 0; j < t; j++) {
+				if (p1[j].first == p2[j].first && p1[j].second == p2[j].second) {
+					cnt++;
+				}
+				
+			}
+			
+
+			if (cnt == t) {
+				answer++;
+			}
+			cnt = 0;
+		}
+		
+	}
+
+
+	cout << answer << endl;
+	return 0;
+}
+
+
+//야구게임
+//수는 3자리이고 각각의 수는 서로 다르기 떄문에 123~999까지 범위를 정하고 서로 다른 수만 뽑아냈다.
+//각 자리의 수를 비교하는데 4중 for문을 사용해서 구현하는데 헷갈렸다. 구현력이 부족하다고 느꼇다.
+//pair를 사용하여 strike와 ball의 수를 저장하였다.

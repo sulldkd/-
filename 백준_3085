@@ -1,0 +1,115 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <thread>
+using namespace std;
+
+
+int dx[4] = { -1,1,0,0 };
+int dy[4] = { 0,0,-1,1 };
+
+string map[51];
+string map2[51];
+
+
+int n;
+int cnt;
+int MAX;
+int answer;
+void input() {
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> map[i];
+	}
+}
+
+void Copy(string arr[], string arr2[]) {
+	for (int i = 0; i < n; i++) {
+		arr2[i] = arr[i];
+	}
+}
+
+
+int main(void) {
+
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
+	input();
+	
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+
+			for (int k = 0; k < 4; k++) {
+
+				Copy(map, map2); //map2에 map를 복사
+				int nx = i + dx[k];
+				int ny = j + dy[k];
+
+				
+				
+				if (nx >= 0 && ny >= 0 && nx < n && ny < n) {
+				
+					
+					
+					char tmp = map2[i][j];
+					map2[i][j] = map2[nx][ny];
+					map2[nx][ny] = tmp;
+					
+					
+					int cnt = 1;
+
+					for (int a = 0; a < n; a++) {
+						for (int b = 0; b < n-1; b++) {
+							if (map2[a][b] == map2[a][b + 1]) {
+								cnt++;
+							}
+							else {
+								MAX = max(MAX, cnt);
+								cnt = 1;
+							}
+						}
+						
+						MAX = max(cnt, MAX);
+						cnt = 1;
+						
+					}
+					
+					cnt = 1;
+
+					for (int a = 0; a < n; a++) {
+						for (int b = 0; b < n-1; b++) {
+							if (map2[b][a] == map2[b+1][a]) {
+								cnt++;
+							}
+							else {
+								MAX = max(MAX, cnt);
+								cnt = 1;
+							}
+						}
+						MAX = max(cnt, MAX);
+						cnt = 1;
+					}
+					
+				}
+
+				answer = max(answer, MAX);
+				
+			}
+		}
+	}
+	
+
+	cout << answer<< endl;
+	
+	return 0;
+
+}
+
+
+//사탕게임
+//하나의 좌표를 동서남북 네 방향으로 돌려가며 각각 돌렸을때 전체 행,열을 조사하여 연속되는 알파벳의 최대값을 구하는 식으로 풀었다.
+//자잘자잘한 실수들이 너무 많아서 시간이 오래 걸렸다.
